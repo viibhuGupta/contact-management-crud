@@ -30,15 +30,35 @@ export default function CreateContactForm() {
           body: formData,
         }
       );
-      setLoading(false);
-      toast.success("Contact Created :) ")
+      
       const uploadImageData = await uploadResponce.json();
       const imageUrl = uploadImageData.secure_url;
       const contactData = {
         ...data,
         profile: imageUrl,
       };
-      console.log(contactData);
+      // send the data to the api
+        const response = await fetch("http://localhost:3000/api/contacts" ,{
+          method : "POST",
+          headers : {
+            "Content-Type" : "application/json",
+          },
+          body : JSON.stringify(contactData)
+        });
+
+        if (!response.ok) {
+          console.log("Getting error in response")
+        } else{
+          reset();
+          setLoading(false);
+          toast.success("Contact Created :) ");
+          // const contactCreated = response.json();
+          console.log(contactData);
+        }
+
+     
+
+   
     } catch (error) {
       console.log(error);
       setLoading(false);
