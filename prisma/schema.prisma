@@ -19,5 +19,5 @@ model Contact {
   name String
   email String
   phone String
-  image String
+  profile String
 }

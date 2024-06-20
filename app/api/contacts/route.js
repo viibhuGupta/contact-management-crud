@@ -1,16 +1,21 @@
+import db from "@/libs/db";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
     try {
         // deconstruct the data 
         const {email , name , phone , profile} = await request.json();
-        // creating Object
-        const newContacts = {
-            email , 
-            name , 
-            phone , 
-            profile
-        }
+
+        // 
+        const newContacts = await db.contact.create({
+           data : {
+            name ,
+            phone ,
+            email ,
+            profile 
+           }
+
+        })  
         console.log(newContacts);
         return NextResponse.json( newContacts,{
             message : "Contact Creaed Sucessful"
